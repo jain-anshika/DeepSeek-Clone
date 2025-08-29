@@ -48,8 +48,24 @@ const Message = ({role, content}) => {
                     (
                         <>
                         <Image src={assets.logo_icon} alt='' className='h-9 w-9 p-1 border border-white/15 rounded-full' />
-                        <div className='space-y-4 w-full overflow-scroll'>
-                            <Markdown>{content}</Markdown> 
+                        <div className='space-y-4 w-full overflow-x-auto whitespace-pre-wrap'>
+                            <div className="prose prose-invert max-w-none">
+                                <Markdown 
+                                    components={{
+                                        p: ({children}) => <p className="mb-2 text-white/90 leading-relaxed">{children}</p>,
+                                        code: ({node, inline, className, children, ...props}) => (
+                                            <code 
+                                                className={`${inline ? 'bg-[#2d2d3b] px-1 py-0.5 rounded text-sm' : 'block bg-[#2d2d3b] p-4 rounded-lg my-4 text-sm overflow-auto'}`}
+                                                {...props}
+                                            >
+                                                {children}
+                                            </code>
+                                        )
+                                    }}
+                                >
+                                    {content}
+                                </Markdown> 
+                            </div>
                         </div>
                         </>
                     )

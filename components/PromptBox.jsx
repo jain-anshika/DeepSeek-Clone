@@ -62,7 +62,6 @@ const PromptBox = ({setIsLoading, isLoading}) => {
                 setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat._id ? { ...chat, messages: [...chat.messages, data.data] } : chat));
 
                 const message = data.data.content;
-                const messageTokens = message.split("");
                 let assistantMessage = {
                     role: 'assistant',
                     content: "",
@@ -74,17 +73,22 @@ const PromptBox = ({setIsLoading, isLoading}) => {
                     messages: [...prev.messages, assistantMessage],
                 }));
 
-                for (let i = 0; i < messageTokens.length; i++) {
+                // Split by words instead of characters for smoother animation
+                const words = message.split(/(\s+)/);
+                let currentText = "";
+
+                for (let i = 0; i < words.length; i++) {
                     setTimeout(() => {
-                        assistantMessage.content = messageTokens.slice(0, i + 1).join(" ");
-                        setSelectedChat((prev) => {
-                            const updatedMessages = [
-                                ...prev.messages.slice(0, -1),
-                                assistantMessage
-                            ];
-                            return { ...prev, messages: updatedMessages };
-                        });
-                    }, i * 100);
+                        currentText += words[i];
+                        const updatedMessage = {
+                            ...assistantMessage,
+                            content: currentText
+                        };
+                        setSelectedChat((prev) => ({
+                            ...prev,
+                            messages: [...prev.messages.slice(0, -1), updatedMessage]
+                        }));
+                    }, i * 50); // Reduced delay for smoother animation
                 }
             } else {
                 toast.error(data.message || "Unknown backend error");
