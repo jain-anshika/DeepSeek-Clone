@@ -2,6 +2,9 @@
 
 A modern AI chat application built with Next.js and integrated with the DeepSeek AI model. This project provides an interactive chat interface similar to ChatGPT, with features like chat history, message persistence, and real-time AI responses.
 
+<img width="2879" height="1537" alt="image" src="https://github.com/user-attachments/assets/45d46550-fd6b-462e-8ca2-3b334c66a72e" />
+
+
 ## 🚀 Tech Stack
 
 ### Frontend
